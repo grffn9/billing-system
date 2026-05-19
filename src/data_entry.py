@@ -9,10 +9,9 @@
 # writes the employee information to "Billing.txt", and finally, 
 # asks if you'd like to enter another employee
 # -------------------------------------------------------------
-import BillingModule
+import utils
 
 def writeBillingInformation():
-    BillingModule.resetBillingFile()
 
     totalHours = 0.0
     averageHours = 0.0
@@ -29,12 +28,12 @@ def writeBillingInformation():
     OVERTIME_RATE_INCREASE = 0.05
     
     while continueProgram == "y":
-        employeeName = BillingModule.readEmployeeName("\nEmployee Name: ")
-        hourlyRate = BillingModule.readHourlyRate("Hourly Rate: ")
-        week1Hours = BillingModule.readWeeklyHours("Enter hours worked for week 1: ")
-        week2Hours = BillingModule.readWeeklyHours("Enter hours worked for week 2: ")
-        week3Hours = BillingModule.readWeeklyHours("Enter hours worked for week 3: ")
-        week4Hours = BillingModule.readWeeklyHours("Enter hours worked for week 4: ")
+        employeeName = utils.readEmployeeName("\nEmployee Name: ")
+        hourlyRate = utils.readHourlyRate("Hourly Rate: ")
+        week1Hours = utils.readWeeklyHours("Enter hours worked for week 1: ")
+        week2Hours = utils.readWeeklyHours("Enter hours worked for week 2: ")
+        week3Hours = utils.readWeeklyHours("Enter hours worked for week 3: ")
+        week4Hours = utils.readWeeklyHours("Enter hours worked for week 4: ")
 
         totalHours = week1Hours + week2Hours + week3Hours + week4Hours
         averageHours = totalHours / WEEKS_IN_MONTH
@@ -61,7 +60,7 @@ def writeBillingInformation():
         print(regularHoursMessage)
         print(f"Amount Due: ${invoiceAmount:,.2f}")
 
-        BillingModule.writeBillingRecord(employeeName, hourlyRate, week1Hours, week2Hours, week3Hours, week4Hours)
+        utils.writeBillingRecord(employeeName, hourlyRate, week1Hours, week2Hours, week3Hours, week4Hours)
 
         continueProgram = input('\nEnter another employee? ("y"=yes"): ')
         

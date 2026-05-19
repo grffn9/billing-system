@@ -5,9 +5,11 @@
 # Description:
 # Provides the ad-hoc management report
 # -------------------------------------------------------------
+import os
 
-
-def adHocReport(fileName="Billing.txt"):
+def adHocReport(fileName=None):
+    if fileName is None:
+        fileName = os.path.join("data", "Billing.txt")
     try:
         with open(fileName, "r") as file:
             totalBillableDue = 0.0
@@ -26,11 +28,16 @@ def adHocReport(fileName="Billing.txt"):
             while line != "":
                 employeeName = line
 
-                hourlyRate = float(file.readline().strip())
-                week1Hours = float(file.readline().strip())
-                week2Hours = float(file.readline().strip())
-                week3Hours = float(file.readline().strip())
-                week4Hours = float(file.readline().strip())
+                try:
+                    hourlyRate = float(file.readline().strip())
+                    week1Hours = float(file.readline().strip())
+                    week2Hours = float(file.readline().strip())
+                    week3Hours = float(file.readline().strip())
+                    week4Hours = float(file.readline().strip())
+                except ValueError:
+                    print(f"Skipping malformed data for employee: {employeeName}")
+                    line = file.readline().strip()
+                    continue
 
                 totalHours = week1Hours + week2Hours + week3Hours + week4Hours
 
@@ -55,7 +62,7 @@ def adHocReport(fileName="Billing.txt"):
 
                 line = file.readline().strip()
 
-            if employeeCount >= MINIMUM_EMPLOYEE_COUNT:
+            if employeeCount > MINIMUM_EMPLOYEE_COUNT:
                 averageBillableHours = totalBillingHours / (employeeCount * NUMBER_OF_WEEKS_WORKED)
                 summary = (
                     f"\nTotal Billable Due:\t${totalBillableDue:,.2f}\n"

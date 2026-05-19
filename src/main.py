@@ -5,14 +5,16 @@
 # Description:
 # Provides the menu to run program4 and program5
 # -------------------------------------------------------------
-import program4
-import program5
+import data_entry
+import report
+import utils
 
 def displayMenu():
     print("\nBilling System Menu:")
     print("0 - End")
     print("1 - Enter billing data")
     print("2 - Display ad-hoc billing report")
+    print("3 - Reset billing data")
 
 def main():
     option = None
@@ -23,9 +25,12 @@ def main():
         option = input("\nOption ==> ").strip()
 
         if option == "1":
-            program4.writeBillingInformation() 
+            data_entry.writeBillingInformation() 
         elif option == "2":
-            program5.adHocReport()
+            report.adHocReport()
+        elif option == "3":
+            utils.resetBillingFile()
+            print("\nBilling data reset successfully.")
         elif option != "0":
             print("\nPlease enter an available option.")
 

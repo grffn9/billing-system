@@ -7,12 +7,12 @@
 # input for weekly hours, hourly rate, employee name, 
 # resetting the billing file, and writing a billing record
 # -------------------------------------------------------------
+import os
 
 def readWeeklyHours(inputPrompt):
     MINIMUM_HOURS_WORKED = 35
     MAXIMUM_HOURS_WORKED = 80
-    hoursInput = 0.0
-    while MINIMUM_HOURS_WORKED >= hoursInput or hoursInput >= MAXIMUM_HOURS_WORKED:
+    while True:
         try:
             hoursInput = float(input(inputPrompt))
             if MINIMUM_HOURS_WORKED <= hoursInput <= MAXIMUM_HOURS_WORKED:
@@ -24,8 +24,7 @@ def readWeeklyHours(inputPrompt):
 
 def readHourlyRate(inputPrompt):
     MINIMUM_HOURLY_RATE = 20.0
-    hourlyRate = 0.0
-    while hourlyRate <= MINIMUM_HOURLY_RATE:
+    while True:
         try:
             hourlyRate = float(input(inputPrompt))
             if hourlyRate >= MINIMUM_HOURLY_RATE:
@@ -37,16 +36,20 @@ def readHourlyRate(inputPrompt):
 
 def readEmployeeName(inputPrompt):
     MINIMUM_EMPLOYEE_NAME_LENGTH = 1
-    employeeName = input(inputPrompt)
-    while len(employeeName) < MINIMUM_EMPLOYEE_NAME_LENGTH:
-        print("Employee name must be entered.")
+    while True:
         employeeName = input(inputPrompt)
-    return employeeName
+        if len(employeeName) >= MINIMUM_EMPLOYEE_NAME_LENGTH:
+            return employeeName
+        print("Employee name must be entered.")
 
-def resetBillingFile(fileName="Billing.txt"):
+def resetBillingFile(fileName=None):
+    if fileName is None:
+        fileName = os.path.join("data", "Billing.txt")
     with open(fileName, "w") as _:
         pass
 
-def writeBillingRecord(employeeName, hourlyRate, week1Hours, week2Hours, week3Hours, week4Hours, fileName="Billing.txt"):
+def writeBillingRecord(employeeName, hourlyRate, week1Hours, week2Hours, week3Hours, week4Hours, fileName=None):
+    if fileName is None:
+        fileName = os.path.join("data", "Billing.txt")
     with open(fileName, "a") as file:
         file.write(f"{employeeName}\n{hourlyRate}\n{week1Hours}\n{week2Hours}\n{week3Hours}\n{week4Hours}\n")
